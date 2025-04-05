@@ -1,0 +1,49 @@
+//10
+/*An organization took up the exercise to find the Body Mass Index (BMI) of all the
+persons in the team of 10 members. For this create a program to find the BMI and display 
+the height, weight, BMI and status of each individual */
+
+import java.util.Scanner;
+class BodyMassIndex {
+
+    public static double[][] calculateBMI(double[][] arr){
+        for(int i=0; i<arr.length; i++){
+            double weight = arr[i][0], height = arr[i][1];
+            arr[i][2] =  weight/(height*height);
+        }
+        return arr;
+    } 
+    public static String[]  statusBMI(double[][] arr){
+        String[] status = new String[arr.length];
+        for(int i=0; i<status.length; i++){
+            double bmi = arr[i][2];
+            if(bmi<=18.4) status[i] =  "Underweight";
+            else if(bmi>=18.5 && bmi<=24.9) status[i] = "Normal";
+            else if(bmi>=25 && bmi<=39.9) status[i] = "Normal";
+            else status[i] = "Obese";
+        }
+        return status;
+    }
+    public static void main(String[] args) {
+        int rows =3,columns =3;
+        double[][] arr = new double[rows][columns];
+        Scanner input = new Scanner(System.in);
+        for(int i=0; i<rows; i++){
+            System.out.print("Enter the weight in kgs for person " + (i+1) + " : ");
+            arr[i][0] = input.nextDouble();
+            System.out.print("Enter the height in m for person " + (i+1) + " : ");
+            arr[i][1] = input.nextDouble();
+            arr[i][1] *= 0.01;//converting height cm to m
+        }
+        double[][] resArr = BodyMassIndex.calculateBMI(arr);
+        String[] statusBMI = BodyMassIndex.statusBMI(resArr);
+        for(int i=0; i<rows; i++){
+            System.out.println("The details of person " + (i+1) + " : ");
+            System.out.println("Weight in kgs : " + resArr[i][0]);
+            System.out.println("Height in cms : " + resArr[i][1]);
+            System.out.println("BMI : " + resArr[i][2]);
+            System.out.println("BMI status : " + statusBMI[i]);
+        }
+        input.close();
+    }
+}
